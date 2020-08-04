@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:http/http.dart';
 import 'package:marcacao_consulta_medico/connection/connection.dart';
 import 'package:marcacao_consulta_medico/models/user.dart';
+import 'package:marcacao_consulta_medico/screens/medic_work_screen.dart';
 import 'package:marcacao_consulta_medico/screens/register_screen.dart';
 import 'package:mask_text_input_formatter/mask_text_input_formatter.dart';
 
@@ -17,9 +18,9 @@ class LoginScreen extends StatefulWidget {
 
 class _LoginScreenState extends State<LoginScreen> {
 
-  //TextEditingController _cpfTextEditingController = TextEditingController(text: "01741053200");
+  //TextEditingController _cpfTextEditingController = TextEditingController(text: "04264852243");
   TextEditingController _cpfTextEditingController = TextEditingController(text: "");
-  //TextEditingController _passwordTextEditingController = TextEditingController(text: "12345678");
+  //TextEditingController _passwordTextEditingController = TextEditingController(text: "123456");
   TextEditingController _passwordTextEditingController = TextEditingController(text: "");
 
   final GlobalKey<State> _keyLoader = new GlobalKey<State>();
@@ -38,7 +39,7 @@ class _LoginScreenState extends State<LoginScreen> {
       Navigator.pushReplacement(
         context,
         MaterialPageRoute(
-            builder: (context) => MainScreen()
+            builder: (context) => MedicWorkScreen()
         )
       );
     } else {
@@ -77,33 +78,70 @@ class _LoginScreenState extends State<LoginScreen> {
                         child: Column(
                           crossAxisAlignment: CrossAxisAlignment.stretch,
                           children: [
-                            Text("CPF"),
+                            Padding(
+                              padding: EdgeInsets.only(top: 10, bottom: 10),
+                            ),
                             TextField(
-                              keyboardType: TextInputType.numberWithOptions(decimal: false, signed: false),
-                              decoration: InputDecoration(
-                                fillColor: Colors.redAccent
-                              ),
+                              keyboardType: TextInputType.phone,
+                              cursorColor: Colors.black,
+                              controller: _cpfTextEditingController,
                               inputFormatters: [
                                 MaskTextInputFormatter(
                                     mask: "### ### ### ##", filter: { "#": RegExp(r'[0-9]') }
                                 )
                               ],
-                              controller: _cpfTextEditingController,
-                              toolbarOptions: ToolbarOptions(
-                                paste: true
+                              decoration: InputDecoration(
+                                labelText: "CPF",
+                                labelStyle: TextStyle(color: Colors.black),
+                                contentPadding: EdgeInsets.only(left: 10, right: 10),
+                                hoverColor: Colors.black,
+                                filled: true,
+                                fillColor: Colors.white,
+                                floatingLabelBehavior: FloatingLabelBehavior.auto,
+                                prefixStyle: TextStyle(color: Colors.black, fontSize: 16),
+                                border: OutlineInputBorder(
+                                    borderSide: BorderSide(
+                                        color: Colors.black
+                                    )
+                                ),
+                                focusedBorder:  OutlineInputBorder(
+                                    borderSide: BorderSide(
+                                        color: Colors.black
+                                    )
+                                ),
                               ),
                             ),
                             Padding(
-                              padding: EdgeInsets.only(top: 10, bottom: 10),
+                              padding: EdgeInsets.only(top: 10),
                             ),
-                            Text("Senha"),
                             TextField(
-                              keyboardType: TextInputType.text,
-                              obscureText: true,
+                              keyboardType: TextInputType.phone,
+                              cursorColor: Colors.black,
                               controller: _passwordTextEditingController,
+                              obscureText: true,
+                              decoration: InputDecoration(
+                                labelText: "Senha",
+                                labelStyle: TextStyle(color: Colors.black),
+                                contentPadding: EdgeInsets.only(left: 10, right: 10),
+                                hoverColor: Colors.black,
+                                filled: true,
+                                fillColor: Colors.white,
+                                floatingLabelBehavior: FloatingLabelBehavior.auto,
+                                prefixStyle: TextStyle(color: Colors.black, fontSize: 16),
+                                border: OutlineInputBorder(
+                                    borderSide: BorderSide(
+                                        color: Colors.black
+                                    )
+                                ),
+                                focusedBorder:  OutlineInputBorder(
+                                    borderSide: BorderSide(
+                                        color: Colors.black
+                                    )
+                                ),
+                              ),
                             ),
                             Padding(
-                              padding: EdgeInsets.only(top: 20),
+                              padding: EdgeInsets.only(top: 10),
                             ),
                             RaisedButton(
                               onPressed: loginOnPressed,
@@ -111,33 +149,6 @@ class _LoginScreenState extends State<LoginScreen> {
                               color: Colors.redAccent,
                               textColor: Colors.white,
                             ),
-                            Padding(
-                              padding: EdgeInsets.all(0),
-                              child: Column(
-                                mainAxisAlignment: MainAxisAlignment.end,
-                                crossAxisAlignment: CrossAxisAlignment.stretch,
-                                children: [
-                                  RaisedButton(
-                                    child: Text("Cadastrar"),
-                                    onPressed: () async {
-                                      final result = await Navigator.push(
-                                          context,
-                                          MaterialPageRoute(
-                                              builder: (context) => RegisterScreen()
-                                          )
-                                      );
-                                      if (result == "register_success") {
-                                        Scaffold.of(context)..removeCurrentSnackBar()..showSnackBar(SnackBar(
-                                          content: Text("Cadastro realizado com sucesso!"),
-                                        ));
-                                      }
-                                    },
-                                    color: Colors.black45,
-                                    textColor: Colors.white,
-                                  )
-                                ],
-                              ),
-                            )
                           ],
                         ),
                       ),

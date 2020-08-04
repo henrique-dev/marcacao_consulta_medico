@@ -51,7 +51,7 @@ class Connection {
     var headers = {
       "Content-Type" : "application/json; charset=UTF-8"
     };
-    HttpConnection.post("patients/auth/sign_in",
+    HttpConnection.post("medics/auth/sign_in",
         callBack: posLogin,
         posCallBack: callback,
         headers: headers,
